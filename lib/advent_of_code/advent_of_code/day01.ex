@@ -32,6 +32,12 @@ Consider your entire calibration document. What is the sum of all of the calibra
     )
   end
 
+  defp sum_outside_numbers(line) do
+    first_digit = List.first(Regex.run(~r/(\d)/, line))
+    last_digit = List.first(Regex.run(~r/(\d)/, String.reverse(line)))
+    first_digit <> last_digit
+  end
+
   @doc"""
 --- Part Two ---
 Your calculation isn't quite right. It looks like some of the digits are actually spelled out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
@@ -56,12 +62,6 @@ What is the sum of all of the calibration values?
     |> Enum.reduce(0,
       fn num_string, sum -> sum + String.to_integer(num_string) end
     )
-  end
-
-  defp sum_outside_numbers(line) do
-    first_digit = List.first(Regex.run(~r/(\d)/, line))
-    last_digit = List.first(Regex.run(~r/(\d)/, String.reverse(line)))
-    first_digit <> last_digit
   end
 
   defp number_strings_to_digits(line) do
