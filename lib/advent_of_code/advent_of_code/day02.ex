@@ -76,6 +76,10 @@ defmodule AdventOfCode.Day02 do
     |> Enum.reduce(0, fn {_game_id, power}, sum -> sum + power end)
   end
 
+  @doc """
+  Returns the maximum balls seen of each color during
+  a given game in the format {game_id, red, green, blue}
+  """
   defp game_color_totals(row) do
     # 1. parse row provided from input file..
     #
@@ -97,6 +101,10 @@ defmodule AdventOfCode.Day02 do
     {String.to_integer(id), red, green, blue}
   end
 
+  @doc """
+  Returns a tuple of the maximum number of balls that have
+  been seen for each color.
+  """
   defp max_rgb_values(draw, {max_red, max_green, max_blue}) do
     red = draw_value_for_color(draw, "red")
     green = draw_value_for_color(draw, "green")
@@ -109,6 +117,10 @@ defmodule AdventOfCode.Day02 do
     }
   end
 
+  @doc """
+  Returns the number of balls for the specified color that
+  were present in this draw. (minimum 0)
+  """
   defp draw_value_for_color(draw, color) do
     {:ok, regex} = Regex.compile("(\\d+) #{color}")
 
@@ -118,6 +130,10 @@ defmodule AdventOfCode.Day02 do
     end
   end
 
+  @doc """
+  Returns true if the game contained fewer than the maximum
+  number of balls per color.
+  """
   defp game_supports_distribution({max_red, max_green, max_blue}, {_game_id, red, green, blue}) do
     red <= max_red and green <= max_green and blue <= max_blue
   end
