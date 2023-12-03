@@ -79,8 +79,7 @@ defmodule AdventOfCode.Day01 do
 
     String.replace(
       line,
-      Map.keys(replacement_map)
-      |> Enum.map(&Atom.to_string/1),
+      Map.keys(replacement_map) |> Enum.map(&Atom.to_string/1),
       fn number_string -> replacement_map[String.to_atom(number_string)] end
     )
   end
