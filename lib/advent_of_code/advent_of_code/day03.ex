@@ -106,12 +106,12 @@ defmodule AdventOfCode.Day03 do
   # Returns a list of tuples containing number positions in
   # the following formation: {row, col, number}
   defp number_positions(input, row_count, col_count, row \\ 0, col \\ 0, numbers \\ [])
-  # case: we've read to the end of the input, return the numbers
   defp number_positions(_input, row_count, _col_count, row, _col, numbers) when row >= row_count do
+    # case: we've read to the end of the input, return the numbers
     numbers
   end
-  # case: we've read to the end of the line, go to the next
   defp number_positions(input, row_count, col_count, row, col, numbers) when col >= col_count do
+    # case: we've read to the end of the line, go to the next
     number_positions(input, row_count, col_count, row + 1, 0, numbers)
   end
   # if there's a number at the specified row / col, then record it into
@@ -127,13 +127,13 @@ defmodule AdventOfCode.Day03 do
   # returns the complete number located at a specific row/col coordinate
   # regardless of its size
   defp number_at_position(input, row, col, col_count, digits \\ [])
-  # case: reached the end of the row, return the value so far
   defp number_at_position(_input, _row, col, col_count, digits) when col >= col_count do
+    # case: reached the end of the row, return the value so far
     list_to_integer_or_nil(digits)
   end
-  # case: for each position, check for a digit, if one is found
-  #       add it to the digits list and continue with the next
   defp number_at_position(input, row, col, col_count, digits) do
+    # case: for each position, check for a digit, if one is found
+    #       add it to the digits list and continue with the next
     character = String.at(input, (row*(col_count+1)) + col)
 
     case Integer.parse(character) do
@@ -171,25 +171,24 @@ defmodule AdventOfCode.Day03 do
 
   # captures the substring handling negative values and values
   # larger than the maximum correctly
-  #
-  # case: if we try to read a row that doesn't exist return an empty string
   defp substring(_input, _col_count, row, _col, _length) when row < 0 do
+    # case: if we try to read a row that doesn't exist return an empty string
     ""
   end
-  # case: when trying to read too far to the left, start at zero
-  #       instead and read fewer characters
   defp substring(input, col_count, row, col, length) when col < 0 do
+    # case: when trying to read too far to the left, start at zero
+    #       instead and read fewer characters
     substring(input, col_count, row, 0, length + col)
   end
-  # case: when trying to read off the right end of a row, past the
-  #       maximum column, instead reduce the length to read until
-  #       it doesn't run over the edge
   defp substring(input, col_count, row, col, length) when col + length > col_count do
+    # case: when trying to read off the right end of a row, past the
+    #       maximum column, instead reduce the length to read until
+    #       it doesn't run over the edge
     difference = col + length - col_count
     substring(input, col_count, row, col, length - difference)
   end
-  # case: no edge case, just read
   defp substring(input, col_count, row, col, length) do
+    # case: no edge case, just read
     # col_count + 1 to account for newline characters
     String.slice(input, row*(col_count+1) + col, length)
   end
@@ -218,12 +217,12 @@ defmodule AdventOfCode.Day03 do
   # Returns a list of tuples containing gear positions in
   # the following formation: {row, col}
   defp gear_positions(input, row_count, col_count, row \\ 0, col \\ 0, gears \\ [])
-  # case: we've read to the end of the input, return the gears
   defp gear_positions(_input, row_count, _col_count, row, _col, gears) when row >= row_count do
+    # case: we've read to the end of the input, return the gears
     gears
   end
-  # case: we've read to the end of the line, go to the next
   defp gear_positions(input, row_count, col_count, row, col, gears) when col >= col_count do
+    # case: we've read to the end of the line, go to the next
     gear_positions(input, row_count, col_count, row + 1, 0, gears)
   end
   defp gear_positions(input, row_count, col_count, row, col, gears) do
@@ -241,11 +240,8 @@ defmodule AdventOfCode.Day03 do
     adjacent_numbers = numbers_adjacent_to_gear(gear, numbers)
 
     case Enum.count(adjacent_numbers) do
-      2 ->
-        adjacent_numbers
-        |> Enum.reduce(1, fn {_, _, number}, product -> product * number end)
-      _ ->
-        0
+      2 -> adjacent_numbers |> Enum.reduce(1, fn {_, _, number}, product -> product * number end)
+      _ -> 0
     end
   end
 
