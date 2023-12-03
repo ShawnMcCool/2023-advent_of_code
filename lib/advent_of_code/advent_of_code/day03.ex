@@ -114,10 +114,10 @@ defmodule AdventOfCode.Day03 do
     # case: we've read to the end of the line, go to the next
     number_positions(input, row_count, col_count, row + 1, 0, numbers)
   end
-  # if there's a number at the specified row / col, then record it into
-  # the numbers list and begin processing at the position immediately
-  # after the found number
   defp number_positions(input, row_count, col_count, row, col, numbers) do
+    # if there's a number at the specified row / col, then record it into
+    # the numbers list and begin processing at the position immediately
+    # after the found number
     case number_at_position(input, row, col, col_count) do
       nil -> number_positions(input, row_count, col_count, row, col + 1, numbers)
       number -> number_positions(input, row_count, col_count, row, col + digit_count(number), [{row, col, number} | numbers])
